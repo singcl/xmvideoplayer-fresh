@@ -1,4 +1,4 @@
-# fresh website
+# fresh
 
 This is the fresh website source. The fresh website contains:
 

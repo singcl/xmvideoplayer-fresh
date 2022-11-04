@@ -11,16 +11,16 @@ import Projects from "../components/Projects.tsx";
 import projects from "../data/showcase.json" assert { type: "json" };
 
 export const handler: Handlers = {
-  GET(req, ctx) {
+  GET(req) {
     const accept = req.headers.get("accept");
+    let path = "/docs/concepts/updating";
     if (accept && !accept.includes("text/html")) {
-      const path = `https://deno.land/x/fresh@${VERSIONS[0]}/init.ts`;
-      return new Response(`Redirecting to ${path}`, {
-        headers: { "Location": path },
-        status: 307,
-      });
+      path = `https://deno.land/x/fresh@${VERSIONS[0]}/update.ts`;
     }
-    return ctx.render();
+    return new Response(`Redirecting to ${path}`, {
+      headers: { "Location": path },
+      status: 307,
+    });
   },
 };
 
@@ -44,7 +44,6 @@ export default function MainPage(props: PageProps) {
         <meta property="og:image" content={ogImageUrl} />
       </Head>
       <div class="flex flex-col min-h-screen">
-        <HelloBar />
         <Hero />
         <div class="flex-1">
           <Intro />
@@ -55,20 +54,6 @@ export default function MainPage(props: PageProps) {
         <Footer />
       </div>
     </>
-  );
-}
-
-function HelloBar() {
-  return (
-    <a
-      class="bg-green-400 text-black border(b green-500) p-3 text-center group"
-      href="https://deno.com/blog/fresh-1.1"
-    >
-      <b>Fresh v1.1</b> has been released with support for <b>automatic JSX</b>,
-      {" "}
-      <b>plugins</b>, <b>DevTools support</b>, and more!{"  "}
-      <span class="group-hover:underline">→</span>
-    </a>
   );
 }
 

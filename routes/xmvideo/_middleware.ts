@@ -17,8 +17,8 @@ interface State {
 
 function cacheHandler() {
   const intervalStr = Deno.env.get("INTERVAL");
-  const account = Deno.env.get("ACCOUNT");
-  const repository = Deno.env.get("REPOSITORY");
+  const account = Deno.env.get("ACCOUNT"); // || 'singcl';
+  const repository = Deno.env.get("REPOSITORY"); // || 'XmVideoPlayer';
   const pre = Deno.env.get("PRE");
   const token = Deno.env.get("TOKEN");
   const PRIVATE_BASE_URL = Deno.env.get("PRIVATE_BASE_URL");

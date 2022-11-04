@@ -5,8 +5,13 @@ import { retryAsync } from "https://deno.land/x/retry@v2.0.0/mod.ts";
 import checkPlatform from "./platform.ts";
 import getSignature from "./signature.ts";
 
-interface ConfigOptions extends Record<string, unknown> {
+interface ConfigOptions {
   interval?: number;
+  account?: string;
+  repository?: string;
+  token?: string;
+  url?: string;
+  pre?: string;
 }
 
 export default class Cache {

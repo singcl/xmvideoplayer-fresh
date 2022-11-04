@@ -11,7 +11,8 @@ import * as $4 from "./routes/index.tsx";
 import * as $5 from "./routes/raw.ts";
 import * as $6 from "./routes/showcase.tsx";
 import * as $7 from "./routes/update.tsx";
-import * as $8 from "./routes/xmvideo/update/[platform]/[version].tsx";
+import * as $8 from "./routes/xmvideo/_middleware.ts";
+import * as $9 from "./routes/xmvideo/update/[platform]/[version].tsx";
 import * as $$0 from "./islands/CopyArea.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/LemonDrop.tsx";
@@ -26,7 +27,8 @@ const manifest = {
     "./routes/raw.ts": $5,
     "./routes/showcase.tsx": $6,
     "./routes/update.tsx": $7,
-    "./routes/xmvideo/update/[platform]/[version].tsx": $8,
+    "./routes/xmvideo/_middleware.ts": $8,
+    "./routes/xmvideo/update/[platform]/[version].tsx": $9,
   },
   islands: {
     "./islands/CopyArea.tsx": $$0,

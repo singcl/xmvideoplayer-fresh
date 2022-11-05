@@ -1,9 +1,15 @@
+import type { HandlerContext } from "$fresh/server.ts";
 import * as semver from "$std/semver/mod.ts";
 import checkAlias from "xmvideoplayer/utils/aliases.ts";
 
 interface RequestParams extends Record<string, string> {
   version: string;
   platform: string;
+}
+
+interface HandlerContextX<Data = unknown, State = Record<string, unknown>>
+  extends HandlerContext<Data, State> {
+  json?(data: unknown, statusCode: number): Response;
 }
 
 export const handler = async (

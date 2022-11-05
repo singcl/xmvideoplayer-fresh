@@ -1,4 +1,3 @@
-import { /* Handlers, */ HandlerContext } from "$fresh/server.ts";
 import * as semver from "$std/semver/mod.ts";
 import checkAlias from "xmvideoplayer/utils/aliases.ts";
 
@@ -9,45 +8,32 @@ interface RequestParams extends Record<string, string> {
 
 export const handler = async (
   req: Request,
-  ctx: HandlerContext
+  ctx: HandlerContextX,
 ): Promise<Response> => {
   const uuid = crypto.randomUUID();
   const { version, platform: platformName } = ctx.params as RequestParams;
 
   if (!semver.valid(version)) {
-    return new Response(
-      JSON.stringify({
-        id: uuid,
-        error: "version_invalid",
-        message: "The specified version is not SemVer-compatible",
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return ctx.json!({
+      id: uuid,
+      error: "version_invalid",
+      message: "The specified version is not SemVer-compatible",
+    }, 500);
   }
 
   const platform = checkAlias(platformName);
 
   if (!platform) {
-    return new Response(
-      JSON.stringify({
-        id: uuid,
-        error: "invalid_platform",
-        message: "The specified platform is not valid",
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-        status: 500,
-      }
-    );
+    return ctx.json!({
+      id: uuid,
+      error: "invalid_platform",
+      message: "The specified platform is not valid",
+    }, 500);
   }
 
   // Get the latest version from the cache
   const cache = ctx.state.cache;
   const latest = await cache.loadCache();
-  console.log("-----cache", latest);
 
   if (!latest.platforms || !latest.platforms[platform]) {
     return new Response(null, {
@@ -68,20 +54,14 @@ export const handler = async (
   if (semver.compare(latest.version, version) !== 0) {
     const { notes, pub_date } = latest;
 
-    return new Response(
-      JSON.stringify({
-        id: uuid,
-        name: latest.version,
-        notes,
-        pub_date,
-        signature: latest.platforms[platform].signature,
-        url: latest.platforms[platform].url,
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-        status: 200,
-      }
-    );
+    return ctx.json!({
+      id: uuid,
+      name: latest.version,
+      notes,
+      pub_date,
+      signature: latest.platforms[platform].signature,
+      url: latest.platforms[platform].url,
+    }, 200);
   }
 
   return new Response(null, {

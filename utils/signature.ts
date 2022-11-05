@@ -11,7 +11,7 @@ export default async function (
   );
 
   if (!foundSignature) {
-    return null;
+    return '';
   }
 
   const content = await retryAsync(

@@ -14,8 +14,26 @@ interface ConfigOptions {
   pre?: string;
 }
 
+interface PlatformInfo {
+  name: string;
+  api_url: string;
+  url: string;
+  signature: string;
+  content_type: string;
+  size: number;
+}
+
+interface LatestInfo {
+  version: string;
+  notes?: string;
+  pub_date?: string;
+  platforms?: Record<string, PlatformInfo>;
+}
+
 export default class Cache {
-  latest: Record<string, any> = {};
+  latest: LatestInfo = {
+    version: "0.0.0",
+  };
   lastUpdate: number | null = null;
 
   constructor(private config: ConfigOptions) {

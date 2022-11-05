@@ -1,10 +1,15 @@
 import type { HandlerContext } from "$fresh/server.ts";
 import * as semver from "$std/semver/mod.ts";
 import checkAlias from "xmvideoplayer/utils/aliases.ts";
+import type Cache from "xmvideoplayer/utils/cache.ts";
 
 interface RequestParams extends Record<string, string> {
   version: string;
   platform: string;
+}
+
+interface VersionState {
+  cache: Cache;
 }
 
 interface HandlerContextX<Data = unknown, State = Record<string, unknown>>
@@ -12,9 +17,10 @@ interface HandlerContextX<Data = unknown, State = Record<string, unknown>>
   json?(data: unknown, statusCode: number): Response;
 }
 
+//
 export const handler = async (
   req: Request,
-  ctx: HandlerContextX,
+  ctx: HandlerContextX<unknown, VersionState>,
 ): Promise<Response> => {
   const uuid = crypto.randomUUID();
   const { version, platform: platformName } = ctx.params as RequestParams;
@@ -57,14 +63,25 @@ export const handler = async (
   // that will take a long time to fix and release
   // a patch update.
 
+  // // 客户端更新需要的必须信息
+  // interface UpdateInfo {
+  //   url: string;
+  //   version: string;
+  //   signature: string;
+  //   notes?: string;
+  //   pub_date?: string;
+  // }
   if (semver.compare(latest.version, version) !== 0) {
     const { notes, pub_date } = latest;
 
     return ctx.json!({
       id: uuid,
-      name: latest.version,
+      req_url: req.url,
       notes,
       pub_date,
+      //
+      version: latest.version,
+      name: latest.version,
       signature: latest.platforms[platform].signature,
       url: latest.platforms[platform].url,
     }, 200);

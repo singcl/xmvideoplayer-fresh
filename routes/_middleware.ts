@@ -1,6 +1,8 @@
 import type { MiddlewareHandlerContext } from "$fresh/server.ts";
+import getLogger from "$logging/index.ts";
 import resJson from "xmvideoplayer/utils/resJson.ts";
-export async function handler(
+
+async function jsonHandler(
   _req: Request,
   ctx: MiddlewareHandlerContext<unknown>
 ) {
@@ -12,3 +14,5 @@ export async function handler(
   });
   return await ctx.next();
 }
+
+export const handler = [getLogger(), jsonHandler];

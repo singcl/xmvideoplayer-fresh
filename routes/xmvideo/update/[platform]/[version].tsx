@@ -1,6 +1,6 @@
 import { /* Handlers, */ HandlerContext } from "$fresh/server.ts";
 import * as semver from "$std/semver/mod.ts";
-import checkAlias from "../../../../utils/aliases.ts";
+import checkAlias from "xmvideoplayer/utils/aliases.ts";
 
 interface RequestParams extends Record<string, string> {
   version: string;

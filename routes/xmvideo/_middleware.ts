@@ -1,5 +1,5 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
-import Cache from "../../utils/cache.ts";
+import Cache from "xmvideoplayer/utils/cache.ts";
 
 interface State {
   xmApplication: string;

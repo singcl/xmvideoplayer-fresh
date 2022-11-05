@@ -1,6 +1,7 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import Cache from "xmvideoplayer/utils/cache.ts";
 import getEnvConfig from "xmvideoplayer/utils/envConfig.ts";
+import resJson from "xmvideoplayer/utils/resJson.ts";
 
 interface State {
   xmApplication: string;
@@ -17,15 +18,12 @@ function cacheHandler() {
     const { cause, message } = err;
     if (cause) {
       return function () {
-        return new Response(
-          JSON.stringify({
+        return resJson(
+          {
             error: cause,
             message,
-          }),
-          {
-            headers: { "Content-Type": "application/json" },
-            status: 400,
-          }
+          },
+          400
         );
       };
     }

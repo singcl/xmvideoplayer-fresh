@@ -57,7 +57,7 @@ export default class Cache {
 
         if (response.status !== 200) {
           throw new Error(
-            `Tried to cache RELEASES, but failed fetching ${url}, status ${status}`
+            `Tried to cache RELEASES, but failed fetching ${url}, status ${response.status}`
           );
         }
 

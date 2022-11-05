@@ -1,39 +1,14 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import Cache from "xmvideoplayer/utils/cache.ts";
+import getEnvConfig from "xmvideoplayer/utils/envConfig.ts";
 
 interface State {
   xmApplication: string;
   cache: null | Cache;
 }
 
-// interface EnvConfig {
-//   interval?: number;
-//   account?: string;
-//   repository?: string;
-//   token?: string;
-//   url?: string;
-//   pre?: string;
-// }
-
 function cacheHandler() {
-  const intervalStr = Deno.env.get("INTERVAL");
-  const account = Deno.env.get("ACCOUNT");
-  const repository = Deno.env.get("REPOSITORY");
-  const pre = Deno.env.get("PRE");
-  const token = Deno.env.get("TOKEN");
-  const PRIVATE_BASE_URL = Deno.env.get("PRIVATE_BASE_URL");
-  const FRESH_URL = Deno.env.get("FRESH_URL");
-  const url = FRESH_URL || PRIVATE_BASE_URL;
-  //
-  const config = {
-    interval: intervalStr ? Number(intervalStr) : undefined,
-    account,
-    repository,
-    token,
-    url,
-    pre,
-  };
-
+  const config = getEnvConfig();
   //
   let cache: null | Cache = null;
   try {

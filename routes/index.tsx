@@ -38,7 +38,7 @@ export const handler: Handlers<IDetails, State> = {
     }
     // 调用github API 可能导致页面加载缓慢
     const latest = await cache?.loadCache();
-    // MOCK
+    // // MOCK
     // const latest = {
     //   version: "v0.4.10",
     //   notes: "See the assets to download this version and install.",
@@ -140,12 +140,12 @@ export default function MainPage(props: PageProps<IDetails>) {
       </Head>
       <div class="flex flex-col min-h-screen">
         <Announcement {...props.data} />
-        <Hero />
+        <Hero {...props.data} />
         <div class="flex-1">
           <Intro />
           <GettingStarted origin={origin} />
-          <Example />
-          <Showcase />
+          {/* <Example /> */}
+          {/* <Showcase /> */}
         </div>
         <Footer />
       </div>
@@ -175,17 +175,39 @@ function Announcement(
   );
 }
 
-function Hero() {
+interface HeroProps {
+  allReleases: string;
+  files?: LatestInfo["platforms"];
+}
+function Hero({ allReleases, files }: HeroProps) {
+  if (!files) return null;
   return (
     <>
       <div class="flex justify-end items-center bg-green-300">
         <a
-          href="/docs"
+          href={allReleases}
           class="border(1 black) inline-flex items-center h-10 px-4 m-4 text-black bg-transparent rounded hover:bg-white"
         >
-          Documentation
+          All Releases
         </a>
       </div>
+      <section class="w-full flex justify-center items-center bg-green-300 pb-7">
+        <div class="text-center max-w-screen-md mx-auto px-4 sm:px-6 md:px-8 space-y-2">
+          {Object.entries(files).map(([key, info]) => {
+            return (
+              <div key={key} class="grid grid-cols-2 md:grid-cols-2 gap-1 md:gap-6">
+                <div>
+                  {key}:&nbsp;<span>
+                    <a href={info.url} className="text-yellow-600">/latest/{key}</a>
+                  </span>
+                </div>
+                <div className="text-gray-600">{info.size} MB</div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       <section class="w-full flex justify-center items-center flex-col bg-green-300">
         <LemonDrop />
       </section>

@@ -38,6 +38,67 @@ export const handler: Handlers<IDetails, State> = {
     }
     // 调用github API 可能导致页面加载缓慢
     const latest = await cache?.loadCache();
+    // MOCK
+    // const latest = {
+    //   version: "v0.4.10",
+    //   notes: "See the assets to download this version and install.",
+    //   pub_date: "2022-11-04T16:25:49Z",
+    //   platforms: {
+    //     appimage: {
+    //       name: "xm-video-player_0.4.10_amd64.AppImage.tar.gz",
+    //       api_url:
+    //         "https://api.github.com/repos/singcl/XmVideoPlayer/releases/assets/83465434",
+    //       url:
+    //         "https://github.com/singcl/XmVideoPlayer/releases/download/v0.4.10/xm-video-player_0.4.10_amd64.AppIm...",
+    //       signature:
+    //         "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUUmZTY1k4WXVYMUpYc0RBT3Q3VXc2...",
+    //       content_type: "application/zip",
+    //       size: 73.9,
+    //     },
+    //     deb: {
+    //       name: "xm-video-player_0.4.10_amd64.deb",
+    //       api_url:
+    //         "https://api.github.com/repos/singcl/XmVideoPlayer/releases/assets/83465428",
+    //       url:
+    //         "https://github.com/singcl/XmVideoPlayer/releases/download/v0.4.10/xm-video-player_0.4.10_amd64.deb",
+    //       signature: "",
+    //       content_type: "application/zip",
+    //       size: 8.1,
+    //     },
+    //     darwin: {
+    //       name: "XmVideoPlayer.app.tar.gz",
+    //       api_url:
+    //         "https://api.github.com/repos/singcl/XmVideoPlayer/releases/assets/83465738",
+    //       url:
+    //         "https://github.com/singcl/XmVideoPlayer/releases/download/v0.4.10/XmVideoPlayer.app.tar.gz",
+    //       signature:
+    //         "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUUmZTY1k4WXVYMUFGRldLZ0dWSFRI...",
+    //       content_type: "application/zip",
+    //       size: 5.9,
+    //     },
+    //     dmg: {
+    //       name: "XmVideoPlayer_0.4.10_x64.dmg",
+    //       api_url:
+    //         "https://api.github.com/repos/singcl/XmVideoPlayer/releases/assets/83465737",
+    //       url:
+    //         "https://github.com/singcl/XmVideoPlayer/releases/download/v0.4.10/XmVideoPlayer_0.4.10_x64.dmg",
+    //       signature: "",
+    //       content_type: "application/zip",
+    //       size: 5.3,
+    //     },
+    //     win64: {
+    //       name: "XmVideoPlayer_0.4.10_x64_en-US.msi.zip",
+    //       api_url:
+    //         "https://api.github.com/repos/singcl/XmVideoPlayer/releases/assets/83465721",
+    //       url:
+    //         "https://github.com/singcl/XmVideoPlayer/releases/download/v0.4.10/XmVideoPlayer_0.4.10_x64_en-US.msi...",
+    //       signature:
+    //         "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUUmZTY1k4WXVYMUJoZS9BTnB5bGpF...",
+    //       content_type: "application/zip",
+    //       size: 5.2,
+    //     },
+    //   },
+    // };
     const details = {
       account: configs.account,
       repository: configs.repository,
@@ -78,7 +139,7 @@ export default function MainPage(props: PageProps<IDetails>) {
         <meta property="og:image" content={ogImageUrl} />
       </Head>
       <div class="flex flex-col min-h-screen">
-        <HelloBar />
+        <Announcement {...props.data} />
         <Hero />
         <div class="flex-1">
           <Intro />
@@ -92,15 +153,23 @@ export default function MainPage(props: PageProps<IDetails>) {
   );
 }
 
-function HelloBar() {
+interface AnnouncementProps {
+  account?: string;
+  repository?: string;
+  date?: string;
+  version?: string;
+  github: string;
+}
+function Announcement(
+  { account, repository, version, github }: AnnouncementProps,
+) {
   return (
     <a
       class="bg-green-400 text-black border(b green-500) p-3 text-center group"
-      href="https://deno.com/blog/fresh-1.1"
+      href={github}
     >
-      <b>Fresh v1.1</b> has been released with support for <b>automatic JSX</b>,
-      {" "}
-      <b>plugins</b>, <b>DevTools support</b>, and more!{"  "}
+      <b>{`${account}/${repository}@${version}`}</b>
+      &nbsp;has been released!&nbsp;
       <span class="group-hover:underline">→</span>
     </a>
   );

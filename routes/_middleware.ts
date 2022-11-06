@@ -7,6 +7,7 @@ import getEnvConfig from "xmvideoplayer/utils/envConfig.ts";
 export interface State {
   xmApplication: string;
   cache: null | Cache;
+  configs: ReturnType<typeof getEnvConfig>;
 }
 
 // CTX T添加json方法
@@ -49,6 +50,7 @@ function cacheHandler() {
   //
   return async function (_req: Request, ctx: MiddlewareHandlerContext<State>) {
     ctx.state.xmApplication = "XmVideoPlayer";
+    ctx.state.configs = config;
     // 所有请求共享同一个cache实例
     ctx.state.cache = cache;
     const resp = await ctx.next();

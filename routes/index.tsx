@@ -9,8 +9,14 @@ import CopyArea from "../islands/CopyArea.tsx";
 import * as Icons from "../components/Icons.tsx";
 import Projects from "../components/Projects.tsx";
 import projects from "../data/showcase.json" assert { type: "json" };
+import type { State } from "./_middleware.ts";
 
-export const handler: Handlers = {
+interface IDetails {
+  cache: State["cache"];
+  configs: State["configs"];
+}
+
+export const handler: Handlers<IDetails, State> = {
   GET(req, ctx) {
     const accept = req.headers.get("accept");
     if (accept && !accept.includes("text/html")) {
@@ -20,18 +26,21 @@ export const handler: Handlers = {
         status: 307,
       });
     }
-    return ctx.render();
+    return ctx.render({ cache: ctx.state.cache, configs: ctx.state.configs });
   },
 };
 
-const TITLE = "fresh - The next-gen web framework.";
 const DESCRIPTION =
-  "Just in time edge rendering, island based interactivity, and no configuration TypeScript support using Deno.";
+  "XmVideoPlayer支持m3u8,flv,mpeg-dash等多种流媒体格式🔥<https://github.com/singcl> powered by Deno, Fresh framework";
 
-export default function MainPage(props: PageProps) {
+export default function MainPage(props: PageProps<IDetails>) {
   const ogImageUrl = new URL(asset("/home-og.png"), props.url).href;
   const origin = `${props.url.protocol}//${props.url.host}`;
-
+  //
+  const { configs, cache } = props.data;
+  const TITLE =
+    `XmVideoPlayer支持m3u8,flv,mpeg-dash等多种流媒体格式高颜值的桌面客户端-${configs.account}/${configs.repository}`;
+  //
   return (
     <>
       <Head>

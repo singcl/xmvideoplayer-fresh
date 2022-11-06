@@ -1,3 +1,4 @@
+import type { LatestInfo } from "xmvideoplayer/utils/cache.ts";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Counter from "../islands/Counter.tsx";
@@ -12,12 +13,21 @@ import projects from "../data/showcase.json" assert { type: "json" };
 import type { State } from "./_middleware.ts";
 
 interface IDetails {
-  cache: State["cache"];
-  configs: State["configs"];
+  account?: string;
+  repository?: string;
+  date?: string;
+  files?: LatestInfo["platforms"];
+  version?: string;
+  releaseNotes: string;
+  allReleases: string;
+  github: string;
+  title: string;
 }
 
+// Handler Route
 export const handler: Handlers<IDetails, State> = {
-  GET(req, ctx) {
+  async GET(req, ctx) {
+    const { cache, configs } = ctx.state;
     const accept = req.headers.get("accept");
     if (accept && !accept.includes("text/html")) {
       const path = `https://deno.land/x/fresh@${VERSIONS[0]}/init.ts`;
@@ -26,10 +36,27 @@ export const handler: Handlers<IDetails, State> = {
         status: 307,
       });
     }
-    return ctx.render({ cache: ctx.state.cache, configs: ctx.state.configs });
+    // 调用github API 可能导致页面加载缓慢
+    const latest = await cache?.loadCache();
+    const details = {
+      account: configs.account,
+      repository: configs.repository,
+      date: latest?.pub_date,
+      files: latest?.platforms,
+      version: latest?.version,
+      releaseNotes:
+        `https://github.com/${configs.account}/${configs.repository}/releases/tag/${latest?.version}`,
+      allReleases:
+        `https://github.com/${configs.account}/${configs.repository}/releases`,
+      github: `https://github.com/${configs.account}/${configs.repository}`,
+      title:
+        `XmVideoPlayer支持m3u8,flv,mpeg-dash等多种流媒体格式高颜值的桌面客户端-${configs.account}/${configs.repository}`,
+    };
+    return ctx.render(details);
   },
 };
 
+// Component Route
 const DESCRIPTION =
   "XmVideoPlayer支持m3u8,flv,mpeg-dash等多种流媒体格式🔥<https://github.com/singcl> powered by Deno, Fresh framework";
 
@@ -37,16 +64,14 @@ export default function MainPage(props: PageProps<IDetails>) {
   const ogImageUrl = new URL(asset("/home-og.png"), props.url).href;
   const origin = `${props.url.protocol}//${props.url.host}`;
   //
-  const { configs, cache } = props.data;
-  const TITLE =
-    `XmVideoPlayer支持m3u8,flv,mpeg-dash等多种流媒体格式高颜值的桌面客户端-${configs.account}/${configs.repository}`;
+  const { title } = props.data;
   //
   return (
     <>
       <Head>
-        <title>{TITLE}</title>
+        <title>{title}</title>
         <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content={TITLE} />
+        <meta property="og:title" content={title} />
         <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={props.url.href} />

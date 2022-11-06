@@ -23,7 +23,7 @@ interface PlatformInfo {
   size: number;
 }
 
-interface LatestInfo {
+export interface LatestInfo {
   version: string;
   notes?: string;
   pub_date?: string;

@@ -6,7 +6,7 @@ import type { DdConfigOptions } from "xmvideoplayer/mongodb/db.ts";
 export function mongodb(options: DdConfigOptions) {
   const db = DbBuilder.create(options);
   return async (_req: Request, ctx: MiddlewareHandlerContext) => {
-    ctx.state.mongodb = db.client;
+    ctx.state.mongodb = db;
     return await ctx.next();
   };
 }

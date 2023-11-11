@@ -60,9 +60,7 @@ export const handler: Handlers<IDetails, State> = {
   },
 };
 
-// Component Route
-const DESCRIPTION =
-  "XmVideoPlayer支持m3u8,flv,mpeg-dash等多种流媒体格式🔥<https://github.com/singcl> powered by Deno, Fresh framework";
+
 
 export default function MainPage(props: PageProps<IDetails>) {
   const ogImageUrl = new URL(asset("/home-og.png"), props.url).href;
@@ -74,10 +72,7 @@ export default function MainPage(props: PageProps<IDetails>) {
     <>
       <Head>
         <title>{title}</title>
-        <meta name="description" content={DESCRIPTION} />
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:type" content="website" />
         <meta property="og:url" content={props.url.href} />
         <meta property="og:image" content={ogImageUrl} />
       </Head>

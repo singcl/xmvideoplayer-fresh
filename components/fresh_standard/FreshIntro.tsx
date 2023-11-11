@@ -16,11 +16,11 @@ export default function Intro() {
 
         <picture class="block mt-4 md:mt-0">
           <img
-            src="/illustration/lemon-squash.svg"
+            src="/illustration/logo.svg"
             class="w-80 mx-auto"
             width={800}
             height={678}
-            alt="deno is drinking fresh lemon squash"
+            alt="XmVideoPlayer"
           />
         </picture>
       </div>

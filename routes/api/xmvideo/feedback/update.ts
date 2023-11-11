@@ -2,6 +2,7 @@ import type { Handlers } from "$fresh/server.ts";
 import type { DbBuilder } from "xmvideoplayer/mongodb/db.ts";
 import { z } from "zod/mod.ts";
 import { feedbackCollection } from "xmvideoplayer/mongodb/schema/feedback.ts";
+import resJson from "xmvideoplayer/utils/resJson.ts";
 
 interface DbState {
   mongodb: DbBuilder;
@@ -36,9 +37,7 @@ export const handler: Handlers<unknown, DbState> = {
         message: data.message,
         uid: uuid,
       });
-      return new Response(JSON.stringify({ id: insertRes.insertedId }), {
-        status: 200,
-      });
+      return resJson({ id: insertRes.insertedId }, 200);
     } catch (e) {
       console.error("参数错误:", e);
       return new Response(

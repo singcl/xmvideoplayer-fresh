@@ -9,7 +9,7 @@ import FreshAnnouncement from '../components/fresh_standard/FreshAnnouncement.ts
 import FreshHero from '../components/fresh_standard/FreshHero.tsx'
 import Footer from "../components/Footer.tsx";
 import VERSIONS from "../versions.json" assert { type: "json" };
-import V_UPDATE from "../data/update.json" assert { type: "json" };
+// import V_UPDATE from "../data/update.json" assert { type: "json" };
 
 
 import type { State } from "./_middleware.ts";

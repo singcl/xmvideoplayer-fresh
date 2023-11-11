@@ -17,7 +17,7 @@
     "xmvideoplayer/utils/": "./utils/",
     "$logging/": "https://deno.land/x/fresh_logging@1.1.2/",
     
-    "atlassdk": "https://deno.land/x/atlas_sdk@1.1.1",
-    "atlassdk/": "https://deno.land/x/atlas_sdk@1.1.1/"
+    "atlassdk": "https://deno.land/x/atlas_sdk@v1.1.1",
+    "atlassdk/": "https://deno.land/x/atlas_sdk@v1.1.1/"
   }
 }

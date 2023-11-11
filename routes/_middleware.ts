@@ -3,6 +3,7 @@ import getLogger from "$logging/index.ts";
 import resJson from "xmvideoplayer/utils/resJson.ts";
 import Cache from "xmvideoplayer/utils/cache.ts";
 import getEnvConfig from "xmvideoplayer/utils/envConfig.ts";
+import { mongodb } from "xmvideoplayer/middlewares/mongodb.ts";
 
 export interface State {
   xmApplication: string;
@@ -59,4 +60,14 @@ function cacheHandler() {
   };
 }
 
-export const handler = [getLogger(), jsonHandler, cacheHandler()];
+export const handler = [
+  getLogger(),
+  jsonHandler,
+  cacheHandler(),
+  mongodb({
+    apiKey: getEnvConfig().atlasApiKey || "",
+    endpoint: getEnvConfig().atlasEndpoint || "",
+    dataSource: getEnvConfig().atlasDataSource || "",
+  }),
+];
+

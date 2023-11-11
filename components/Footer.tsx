@@ -1,17 +1,17 @@
-const LINKS = [
-  {
-    title: "Source",
-    href: "https://github.com/denoland/fresh",
-  },
-  {
-    title: "License",
-    href: "https://github.com/denoland/fresh/blob/main/LICENSE",
-  },
-  {
-    title: "Code of Conduct",
-    href: "https://github.com/denoland/fresh/blob/main/CODE_OF_CONDUCT.md",
-  },
-];
+// const LINKS = [
+//   {
+//     title: "Source",
+//     href: "https://github.com/denoland/fresh",
+//   },
+//   {
+//     title: "License",
+//     href: "https://github.com/denoland/fresh/blob/main/LICENSE",
+//   },
+//   {
+//     title: "Code of Conduct",
+//     href: "https://github.com/denoland/fresh/blob/main/CODE_OF_CONDUCT.md",
+//   },
+// ];
 
 export default function Footer() {
   return (
@@ -24,7 +24,7 @@ export default function Footer() {
         ))}
       </div> */}
       <div class="text(gray-600 center)">
-        <span>© {new Date().getFullYear()} the XmVideoPlayer authors</span>
+        <span>© {new Date().getFullYear()} XmVideoPlayer<a href="https://github.com/singcl/XmVideoPlayer">@singcl</a></span>
       </div>
     </footer>
   );

@@ -31,12 +31,12 @@ export const handler: Handlers<unknown, DbState> = {
         );
       }
       const collection = feedbackCollection(ctx.state.mongodb.client);
-      const insertId = await collection.insertOne({
+      const insertRes = await collection.insertOne({
         email: data.email,
         message: data.message,
         uid: uuid,
       });
-      return new Response(JSON.stringify(insertId), {
+      return new Response(JSON.stringify({ id: insertRes.insertedId }), {
         status: 200,
       });
     } catch (e) {

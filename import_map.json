@@ -15,6 +15,7 @@
 
     "xmvideoplayer/": "./",
     "xmvideoplayer/utils/": "./utils/",
-    "$logging/": "https://deno.land/x/fresh_logging@1.1.2/"
+    "$logging/": "https://deno.land/x/fresh_logging@1.1.2/",
+    "croner": "https://deno.land/x/croner@7.0.3/dist/croner.js"
   }
 }

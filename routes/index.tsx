@@ -39,9 +39,9 @@ export const handler: Handlers<IDetails, State> = {
       });
     }
     // 调用github API 可能导致页面加载缓慢
-    // const latest = await cache?.loadCache();
+    const latest = await cache?.loadCache();
     // MOCK
-    const latest = V_UPDATE
+    // const latest = V_UPDATE
     const details = {
       account: configs.account,
       repository: configs.repository,

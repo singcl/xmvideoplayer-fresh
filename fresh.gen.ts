@@ -16,7 +16,8 @@ import * as $9 from "./routes/update.tsx";
 import * as $10 from "./routes/xmvideo/update/[platform]/[version].tsx";
 import * as $$0 from "./islands/CopyArea.tsx";
 import * as $$1 from "./islands/Counter.tsx";
-import * as $$2 from "./islands/LemonDrop.tsx";
+import * as $$2 from "./islands/FreshGettingStarted.tsx";
+import * as $$3 from "./islands/LemonDrop.tsx";
 
 const manifest = {
   routes: {
@@ -35,7 +36,8 @@ const manifest = {
   islands: {
     "./islands/CopyArea.tsx": $$0,
     "./islands/Counter.tsx": $$1,
-    "./islands/LemonDrop.tsx": $$2,
+    "./islands/FreshGettingStarted.tsx": $$2,
+    "./islands/LemonDrop.tsx": $$3,
   },
   baseUrl: import.meta.url,
   config,

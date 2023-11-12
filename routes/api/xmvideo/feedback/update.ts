@@ -14,8 +14,8 @@ export const handler: Handlers<unknown, DbState> = {
     try {
       const body = await req.json();
       const feedback = z.object({
-        email: z.string(),
-        message: z.string(),
+        email: z.string().max(200).min(1),
+        message: z.string().max(100).min(1),
       });
 
       const data = feedback.parse(body);

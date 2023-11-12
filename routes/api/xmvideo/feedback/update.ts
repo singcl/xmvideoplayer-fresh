@@ -1,8 +1,8 @@
 import type { Handlers } from "$fresh/server.ts";
 import type { DbClient } from "xmvideoplayer/internal/mongodb/db.ts";
 import { z } from "zod/mod.ts";
-import { feedbackCollection } from "xmvideoplayer/internal/mongodb/schema/feedback.ts";
-import resJson from "xmvideoplayer/utils/resJson.ts";
+import * as feedbackService from "xmvideoplayer/internal/service/feedback/index.ts";
+import { CodeResponse } from "xmvideoplayer/internal/code/code.ts";
 
 interface DbState {
   mongodb: DbClient;
@@ -19,35 +19,19 @@ export const handler: Handlers<unknown, DbState> = {
 
       const data = feedback.parse(body);
       if (!ctx.state?.mongodb) {
-        return new Response(
-          JSON.stringify({
-            error: "server error",
-            message: "内部错误",
-          }),
-          {
-            status: 500,
-          }
-        );
+        return CodeResponse.responseJson("ServerError", undefined, {
+          status: 500,
+        });
       }
-      const collection = feedbackCollection(ctx.state.mongodb);
-      const uuid = crypto.randomUUID();
-      const insertRes = await collection.insertOne({
-        email: data.email,
-        message: data.message,
-        uid: uuid,
-      });
-      return resJson({ id: insertRes.insertedId }, 200);
+
+      const insertRes = await feedbackService.update.feedbackUpdate(
+        ctx.state.mongodb,
+        data
+      );
+      return CodeResponse.responseJson("Success", insertRes);
     } catch (e) {
       console.error("参数错误:", e);
-      return new Response(
-        JSON.stringify({
-          error: "parameters_invalid",
-          message: "参数错误",
-        }),
-        {
-          status: 500,
-        }
-      );
+      return CodeResponse.responseJson("ParamBindError");
     }
   },
 };

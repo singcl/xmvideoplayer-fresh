@@ -10,19 +10,17 @@ interface DbState {
 
 export const handler: Handlers<unknown, DbState> = {
   async POST(req, ctx) {
-    const uuid = crypto.randomUUID();
     try {
       const body = await req.json();
       const feedback = z.object({
-        email: z.string().max(200).min(1),
-        message: z.string().max(100).min(1),
+        email: z.string().max(100).min(1),
+        message: z.string().max(200).min(1),
       });
 
       const data = feedback.parse(body);
       if (!ctx.state?.mongodb) {
         return new Response(
           JSON.stringify({
-            id: uuid,
             error: "server error",
             message: "内部错误",
           }),
@@ -32,6 +30,7 @@ export const handler: Handlers<unknown, DbState> = {
         );
       }
       const collection = feedbackCollection(ctx.state.mongodb);
+      const uuid = crypto.randomUUID();
       const insertRes = await collection.insertOne({
         email: data.email,
         message: data.message,
@@ -42,7 +41,6 @@ export const handler: Handlers<unknown, DbState> = {
       console.error("参数错误:", e);
       return new Response(
         JSON.stringify({
-          id: uuid,
           error: "parameters_invalid",
           message: "参数错误",
         }),

@@ -1,11 +1,11 @@
 import type { Handlers } from "$fresh/server.ts";
-import type { DbBuilder } from "xmvideoplayer/mongodb/db.ts";
+import type { DbClient } from "xmvideoplayer/mongodb/db.ts";
 import { z } from "zod/mod.ts";
 import { feedbackCollection } from "xmvideoplayer/mongodb/schema/feedback.ts";
 import resJson from "xmvideoplayer/utils/resJson.ts";
 
 interface DbState {
-  mongodb: DbBuilder;
+  mongodb: DbClient;
 }
 
 export const handler: Handlers<unknown, DbState> = {
@@ -19,7 +19,7 @@ export const handler: Handlers<unknown, DbState> = {
       });
 
       const data = feedback.parse(body);
-      if (!ctx.state?.mongodb?.client) {
+      if (!ctx.state?.mongodb) {
         return new Response(
           JSON.stringify({
             id: uuid,
@@ -31,7 +31,7 @@ export const handler: Handlers<unknown, DbState> = {
           }
         );
       }
-      const collection = feedbackCollection(ctx.state.mongodb.client);
+      const collection = feedbackCollection(ctx.state.mongodb);
       const insertRes = await collection.insertOne({
         email: data.email,
         message: data.message,

@@ -6,10 +6,17 @@ export interface DdConfigOptions {
   endpoint: string;
 }
 
-export class DbBuilder {
-  client: MongoClient | null = null;
-
-  constructor(options: DdConfigOptions) {
+export class DbClient extends MongoClient {
+  protected static client: DbClient;
+  private constructor(options: DdConfigOptions) {
+    console.log("----mongodb:", "mount mongodb");
+    if (DbClient.client) {
+      const error = new Error(
+        "Error - Please use DbClient.create() create DbClient instance"
+      );
+      error.cause = "build_class_instance";
+      throw error;
+    }
     const { apiKey, dataSource, endpoint } = options;
     if (!apiKey || !dataSource || !endpoint) {
       const error = new Error(
@@ -18,19 +25,19 @@ export class DbBuilder {
       error.cause = "missing_configuration_properties";
       throw error;
     }
-    if (!this.client) {
-      console.log("----mongodb:", "mount mongodb");
-      this.client = new MongoClient({
-        endpoint,
-        dataSource, // e.g. "Cluster0"
-        auth: {
-          apiKey,
-        },
-      });
-    }
+    super({
+      endpoint,
+      dataSource,
+      auth: {
+        apiKey,
+      },
+    });
   }
 
-  static create(options: DdConfigOptions) {
-    return new DbBuilder(options);
+  public static create(options: DdConfigOptions) {
+    if (!DbClient.client) {
+      DbClient.client = new DbClient(options);
+    }
+    return DbClient.client;
   }
 }

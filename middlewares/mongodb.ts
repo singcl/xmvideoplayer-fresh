@@ -1,6 +1,6 @@
 import type { MiddlewareHandlerContext } from "$fresh/server.ts";
-import { DbClient } from "xmvideoplayer/mongodb/db.ts";
-import type { DdConfigOptions } from "xmvideoplayer/mongodb/db.ts";
+import { DbClient } from "xmvideoplayer/internal/mongodb/db.ts";
+import type { DdConfigOptions } from "xmvideoplayer/internal/mongodb/db.ts";
 
 // CTX T添加 db
 export function mongodb(options: DdConfigOptions) {

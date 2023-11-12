@@ -1,7 +1,7 @@
 import type { Handlers } from "$fresh/server.ts";
-import type { DbClient } from "xmvideoplayer/mongodb/db.ts";
+import type { DbClient } from "xmvideoplayer/internal/mongodb/db.ts";
 import { z } from "zod/mod.ts";
-import { feedbackCollection } from "xmvideoplayer/mongodb/schema/feedback.ts";
+import { feedbackCollection } from "xmvideoplayer/internal/mongodb/schema/feedback.ts";
 import resJson from "xmvideoplayer/utils/resJson.ts";
 
 interface DbState {

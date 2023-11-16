@@ -4,6 +4,7 @@ export interface FeedbackUpdateSchema {
   email: string;
   message: string;
   uid: string;
+  create_time: Date;
 }
 
 export function feedbackCollection(client: MongoClient) {

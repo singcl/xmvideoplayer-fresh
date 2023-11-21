@@ -7,13 +7,13 @@ export async function feedbackList(db: DbClient, options: { page: CamelPage }) {
   const count = await collection.countDocuments();
   const docs = await collection.aggregate([
     {
+      $sort: { create_time: -1 },
+    },
+    {
       $skip: (page.pageNo - 1) * page.pageSize,
     },
     {
       $limit: page.pageSize,
-    },
-    {
-      $sort: { create_time: -1 },
     },
   ]);
   return {

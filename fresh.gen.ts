@@ -6,15 +6,16 @@ import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_500.tsx";
 import * as $2 from "./routes/_layout.tsx";
 import * as $3 from "./routes/_middleware.ts";
-import * as $4 from "./routes/api/xmvideo/feedback/update.ts";
-import * as $5 from "./routes/docs/[...slug].tsx";
-import * as $6 from "./routes/fresh.tsx";
-import * as $7 from "./routes/gfm.css.ts";
-import * as $8 from "./routes/index.tsx";
-import * as $9 from "./routes/raw.ts";
-import * as $10 from "./routes/showcase.tsx";
-import * as $11 from "./routes/update.tsx";
-import * as $12 from "./routes/xmvideo/update/[platform]/[version].tsx";
+import * as $4 from "./routes/api/xmvideo/feedback/list.ts";
+import * as $5 from "./routes/api/xmvideo/feedback/update.ts";
+import * as $6 from "./routes/docs/[...slug].tsx";
+import * as $7 from "./routes/fresh.tsx";
+import * as $8 from "./routes/gfm.css.ts";
+import * as $9 from "./routes/index.tsx";
+import * as $10 from "./routes/raw.ts";
+import * as $11 from "./routes/showcase.tsx";
+import * as $12 from "./routes/update.tsx";
+import * as $13 from "./routes/xmvideo/update/[platform]/[version].tsx";
 import * as $$0 from "./islands/CopyArea.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/FreshGettingStarted.tsx";
@@ -26,15 +27,16 @@ const manifest = {
     "./routes/_500.tsx": $1,
     "./routes/_layout.tsx": $2,
     "./routes/_middleware.ts": $3,
-    "./routes/api/xmvideo/feedback/update.ts": $4,
-    "./routes/docs/[...slug].tsx": $5,
-    "./routes/fresh.tsx": $6,
-    "./routes/gfm.css.ts": $7,
-    "./routes/index.tsx": $8,
-    "./routes/raw.ts": $9,
-    "./routes/showcase.tsx": $10,
-    "./routes/update.tsx": $11,
-    "./routes/xmvideo/update/[platform]/[version].tsx": $12,
+    "./routes/api/xmvideo/feedback/list.ts": $4,
+    "./routes/api/xmvideo/feedback/update.ts": $5,
+    "./routes/docs/[...slug].tsx": $6,
+    "./routes/fresh.tsx": $7,
+    "./routes/gfm.css.ts": $8,
+    "./routes/index.tsx": $9,
+    "./routes/raw.ts": $10,
+    "./routes/showcase.tsx": $11,
+    "./routes/update.tsx": $12,
+    "./routes/xmvideo/update/[platform]/[version].tsx": $13,
   },
   islands: {
     "./islands/CopyArea.tsx": $$0,

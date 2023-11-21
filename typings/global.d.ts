@@ -13,4 +13,9 @@ declare global {
     extends HandlerContext<Data, State> {
     json?(data: unknown, statusCode: number): Response;
   }
+
+  interface CamelPage {
+    pageNo: number;
+    pageSize: number;
+  }
 }
